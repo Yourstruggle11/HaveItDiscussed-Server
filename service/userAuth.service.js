@@ -6,7 +6,7 @@ import UserModel from '../model/user.model.js'
  * @param {string} idToken
  * @returns {Promise<UserModel>}
  */
-export const authSocialUser = async (idToken) => {
+export const authSocialUser = async (idToken,next) => {
   admin
     .auth()
     .verifyIdToken(idToken)
@@ -28,8 +28,7 @@ export const authSocialUser = async (idToken) => {
       }
     })
     .catch((error) => {
-        const err = new Error(error);
-        err.status = 401;
-      throw err;
+        var err = new Error(error);
+      return next(err)
     })
 }

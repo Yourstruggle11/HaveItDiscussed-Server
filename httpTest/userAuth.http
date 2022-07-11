@@ -1,0 +1,7 @@
+POST http://localhost:5000/public/users/auth/social
+Content-Type: application/json
+
+{
+r    "idToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODU4NWVkZGRlMDc1Mzc0ZWQzNjg0YSIsImlhdCI6MTYzNzU4ODQxNiwiZXhwIjoxNjQwMTgwNDE2fQ.2aTkJaVQl89DK6GcfsYsgsuEHQQPdJUiE1ykIOBgOqI"
+
+}
