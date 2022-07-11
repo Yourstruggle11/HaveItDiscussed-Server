@@ -1,6 +1,8 @@
 import express from "express";
 import env from "dotenv";
 
+import mongodbConnection from "./config/db.js";
+
 // IMPORT ALL MIDDILEARES
 import morgan from 'morgan'
 import cors from 'cors'
@@ -22,11 +24,11 @@ env.config();
 app.use(helmet())
 
 app.disable('x-powered-by')
-// parse json request body
-app.use(express.json({ limit: '69mb' }))
-app.use(express.urlencoded({ limit: '69mb' }))
 // parse urlencoded request body
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ limit: '69mb' }))
+app.use(express.urlencoded({extended: true})); 
+// parse json request body
+app.use(express.json());
 app.use(ExpressMongoSanitize())
 
 // enable cors
@@ -34,7 +36,7 @@ app.use(cors())
 app.options('*', cors())
 
 // Mongodb connection
-// mongodbConnection()
+mongodbConnection()
 
 // Middleware
 app.use(morgan('dev'))
