@@ -1,6 +1,7 @@
 import express from "express";
 import env from "dotenv";
 
+// IMPORT DB CONNECTION
 import mongodbConnection from "./config/db.js";
 
 // IMPORT ALL MIDDILEARES
@@ -14,6 +15,8 @@ import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
 
 //IMPORT ALL ROUTES
 import homeRoute from "./routes/home.route.js";
+import PublicRouter from "./routes/public/index.js";
+import PrivateRouter from "./routes/private/index.js";
 
 const app = express();
 env.config();
@@ -42,8 +45,15 @@ mongodbConnection()
 app.use(morgan('dev'))
 
 
+// HOME ROUTE
+app.use("/", homeRoute);
 
-app.use("/", homeRoute)
+// PUBLIC ROUTE
+app.use('/public', PublicRouter)
+// PRIVATE ROUTE
+app.use('/private', PrivateRouter)
+
+
 
 
 
