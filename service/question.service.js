@@ -1,5 +1,6 @@
 import QuestionModel from '../model/question.model.js'
 import searchUtility from '../utils/search.js'
+import pagination from '../utils/paginate.js'
 
 
 /**
@@ -32,6 +33,7 @@ export const getAllQuestions = async (page, limit, search) => {
     .sort({ createdAt: -1 })
     .select('-questionBody')
   const totalQuestions = questions.length
+  questions = questions && (await pagination(questions, page, limit))
   return { totalQuestions, questions }
 }
 

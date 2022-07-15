@@ -1,5 +1,5 @@
 
-// POST NEW QUESTION
+// POST NEW QUESTION (PROTECTED)
 
 POST http://localhost:5000/private/discussion/new
 Content-Type: application/json

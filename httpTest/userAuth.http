@@ -1,5 +1,5 @@
 // SOCIAL LOGIN
-POST http://localhost:5000/public/users/auth/social
+POST http://localhost:5000/public/users/auth/social 
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 
 
 // VERIFY JWT TOKEM AND CHECK SESSION EXPIRE
-POST http://localhost:5000/private/users/auth/verifyToken
+POST http://localhost:5000/private/users/auth/verifyToken (PROTECTED)
 Content-Type: application/json
 
 {
