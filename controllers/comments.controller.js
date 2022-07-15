@@ -18,3 +18,20 @@ export const addNewComment = catchAsync(async (req, res, next) => {
     body: newComment
   })
 })
+
+
+/**
+ * @description Get all comments of a single question
+ * @route GET /comments/:questionId
+ * @access Private
+ */
+export const getAllCommentsOfAQuestion = catchAsync(async (req, res, next) => {
+  // finding blogs
+  const {questionId} = req.params
+  const comments = await commentsService.getComments(questionId)
+  return res.status(200).json({
+    success: true,
+    message: 'Comments fetch successful !',
+    body: comments
+  })
+})
