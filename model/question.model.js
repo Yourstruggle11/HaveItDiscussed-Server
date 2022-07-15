@@ -35,7 +35,7 @@ const questionSchema = new mongoose.Schema({
 )
 
 
-courseSchema.pre('validate', function (next) {
+questionSchema.pre('validate', function (next) {
     if (this.questionTitle) {
         this.questionSlug = slugify(this.questionTitle, {
             lower: true,
