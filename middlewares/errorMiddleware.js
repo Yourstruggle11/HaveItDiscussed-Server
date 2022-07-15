@@ -1,7 +1,7 @@
 export const notFound = (req, res, next) => {
-    const error = new Error(`Not Found : ${req.originalUrl}`)
-    res.status(404)
-    next(error)
+    const err = new Error(`Not Found : ${req.originalUrl}`)
+    err.status = 404
+    throw err
   }
   
   export const errorHandler = (err, req, res, next) => {
