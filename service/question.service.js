@@ -52,3 +52,44 @@ export const getSingleQuestion = async (questionSlug) => {
     }
     return question
 }
+
+
+/**
+ *
+ * @param {string} slug, _id
+ * @returns {Promise<QuestionModel>}
+ */
+export const likeSingleQuestion = async (slug, _id) => {
+  // Finding Question
+  const question = await await QuestionModel(slug)
+  if (question) {
+    // Check if the user who hit the api has already liked the question post before
+    if (question.likedBy.includes(_id)) {
+      // decrease the like count of the question
+      question.likeCount--
+      // Remove user from array
+      question.likedBy.pull(_id)
+      const saveLike = await question.save()
+      return {
+        saveLike,
+        message: 'Question unliked successful!',
+        likes: `${question.likeCount}`
+      }
+    } else {
+      // increase the Like count of the question
+      question.likeCount++
+      // Add user to the array
+      question.likedBy.push(_id)
+      const saveLike = await question.save()
+      return {
+        saveLike,
+        message: 'Question liked successful!',
+        likes: `${question.likeCount}`
+      }
+    }
+  } else {
+    const err = new Error('No question found');
+    err.status = 404;
+    throw err
+  }
+}

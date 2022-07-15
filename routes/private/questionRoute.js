@@ -1,10 +1,11 @@
 import express from "express";
-import { addNewQuestion } from "../../controllers/question.controller.js";
+import { addNewQuestion,likeDislikeToggle } from "../../controllers/question.controller.js";
 
 const router = express.Router();
 
 // AUTH 
 router.route('/new').post(addNewQuestion)
+router.route('/like-dislike').put(likeDislikeToggle)
 
 
 export default router;

@@ -61,3 +61,23 @@ export const getSingleQuesion = catchAsync(async (req, res, next) => {
     question
   })
 })
+
+
+
+/**
+ * @description Like a questions by user if user is authenticated
+ *              If the question is already liked unlike the questions from the user
+ * @routes PUT/discussion/like-dislike
+ * @access Restricted on user login
+ */
+export const likeDislikeToggle = catchAsync(async (req, res, next) => {
+    const {slug} = req.params
+    const { _id } = req.user
+    const { saveLike, message, likes } = await questionService.likeSingleQuestion(slug, _id)
+    return res.json({
+      success: true,
+      message: message,
+      totalLikes: likes,
+      body: saveLike
+    })
+})
