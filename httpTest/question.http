@@ -1,4 +1,6 @@
 
+// POST NEW QUESTION
+
 POST http://localhost:5000/private/discussion/new
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImllbWFAaWVtbGFicy5jb20iLCJ0ZWFtTmFtZSI6IklFTUEgVEVBTSIsInBob25lIjoxMjM0NTY3ODkwLCJ2ZXJpZmllZCI6dHJ1ZSwicGFpZCI6dHJ1ZSwiaWF0IjoxNjU3OTE2NTAwLCJleHAiOjE2NTc5MTgzMDB9.QkLL3pnT0p4F56HKWDJLS-vpJ9wBo2u08Kgdz1cVPZQ
@@ -12,7 +14,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImllbWFAa
 ###
 
 
+// GET ALL QUESTIONS
 GET http://localhost:5000/public/discussion/get-all-questions
+Content-Type: application/json
+
+
+###
+
+ // GET SINGLE QUESTION BY QUESTION SLUG
+GET http://localhost:5000/public/discussion/get-single-question/questiontitle
 Content-Type: application/json
 
 

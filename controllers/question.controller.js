@@ -42,3 +42,22 @@ export const getAllQuestions = catchAsync(async (req, res, next) => {
     questions
   })
 })
+
+
+
+/**
+ * @description Get single questions from DB
+ * @route GET /discussion/get-single-questions/:questionSlug
+ * @access Public
+ * 
+ * */
+export const getSingleQuesion = catchAsync(async (req, res, next) => {
+    const { questionSlug } = req.params
+
+  const question = await questionService.getSingleQuestion(questionSlug);
+  return res.status(200).json({
+    success: true,
+    message: 'Question fetched successfully',
+    question
+  })
+})

@@ -34,3 +34,19 @@ export const getAllQuestions = async (page, limit, search) => {
   const totalQuestions = questions.length
   return { totalQuestions, questions }
 }
+
+
+/**
+ *
+ * @param {string} questionSlug
+ * @returns {Promise<QuestionModel>}
+ */
+export const getSingleQuestion = async (questionSlug) => {
+    const question = await QuestionModel.findOne({ questionSlug }).populate('postedBy')
+    if (!question) {
+        const err = new Error('No question found');
+        err.status = 404;
+        throw err
+    }
+    return question
+}
