@@ -10,7 +10,6 @@ import generateAuthToken from '../utils/generateAuthToken.js';
 export const authSocialUser = catchAsync(async (req, res, next) => {
   // idToken comes from the client app
   const { idToken } = req.body
-//   console.log(idToken)
 
   const user = await userAuthService.authSocialUser(idToken,next);
   return res.status(200).json({

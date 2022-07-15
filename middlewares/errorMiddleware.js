@@ -5,10 +5,7 @@ export const notFound = (req, res, next) => {
   }
   
   export const errorHandler = (err, req, res, next) => {
-    console.log('====================================');
-    console.log(res.statusCode);
-    console.log('====================================');
-    const statusCode = res.statusCode === 200 ? 400 : res.statusCode
+    const statusCode = err.status === 200 ? 500 : err.status
     
     res.status(statusCode)
     res.json({
