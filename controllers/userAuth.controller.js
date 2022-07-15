@@ -11,7 +11,7 @@ export const authSocialUser = catchAsync(async (req, res, next) => {
   // idToken comes from the client app
   const { idToken } = req.body
 
-  const user = await userAuthService.authSocialUser(idToken,next);
+  const user = await userAuthService.authSocialUser(idToken);
   return res.status(200).json({
     success: true,
     email: user.email,
@@ -21,4 +21,22 @@ export const authSocialUser = catchAsync(async (req, res, next) => {
     accessToken: idToken,
     JwtToken: generateAuthToken(user._id)
   })
+})
+
+
+
+/**
+ * @description verifyToken a user session
+ * @route POST /users/auth/verifyToken
+ * @access private  
+ */
+ export const verifyToken = catchAsync(async (req, res, next) => {
+  const token = req.body.token || req.query.token || req.user;
+
+  const user = await userAuthService.verifyTokenService(token);
+  return res.status(200).json({ 
+    success : true, 
+    message : "Token verify successfully",       
+    data:user
+  });
 })
