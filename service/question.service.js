@@ -61,7 +61,7 @@ export const getSingleQuestion = async (questionSlug) => {
  */
 export const likeSingleQuestion = async (slug, _id) => {
   // Finding Question
-  const question = await await QuestionModel(slug)
+  const question =  await QuestionModel(slug)
   if (question) {
     // Check if the user who hit the api has already liked the question post before
     if (question.likedBy.includes(_id)) {

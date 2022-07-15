@@ -67,7 +67,7 @@ export const getSingleQuesion = catchAsync(async (req, res, next) => {
 /**
  * @description Like a questions by user if user is authenticated
  *              If the question is already liked unlike the questions from the user
- * @routes PUT/discussion/like-dislike
+ * @routes PUT/discussion/like-dislike/:slug
  * @access Restricted on user login
  */
 export const likeDislikeToggle = catchAsync(async (req, res, next) => {

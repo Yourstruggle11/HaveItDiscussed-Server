@@ -35,3 +35,22 @@ export const getAllCommentsOfAQuestion = catchAsync(async (req, res, next) => {
     body: comments
   })
 })
+
+
+/**
+ * @description Like a comment by user if user is authenticated
+ *              If the comment is already liked, unlike the comment from the user
+ * @routes PUT/comments/like-dislike/:slug
+ * @access Restricted on user login
+ */
+ export const likeDislikeToggle = catchAsync(async (req, res, next) => {
+  const {slug} = req.params
+  const { _id } = req.user
+  const { saveLike, message, likes } = await commentsService.likeSingleComment(slug, _id)
+  return res.json({
+    success: true,
+    message: message,
+    totalLikes: likes,
+    body: saveLike
+  })
+})
