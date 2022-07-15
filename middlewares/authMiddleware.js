@@ -13,13 +13,15 @@ export const userRouteProtection = (req, res, next) => {
       // get auth token from header
       token = authHeader && authHeader.split(' ')[1]
     } else {
-      return res
-        .sendStatus(401)
-        .json({ success: false, error: 'No token, authorization denied' })
+      const err = new Error('No token, authorization denied')
+      err.status = 404;
+      throw err;
     }
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) {
-        return res.sendStatus(403).json({ success: false, error: 'Token is invalid' })
+        const err = new Error('Token is invalid')
+        err.status = 403;
+        throw err;
       }
       req.user = user
       next()
