@@ -72,8 +72,11 @@ export const getSingleQuesion = catchAsync(async (req, res, next) => {
  */
 export const likeDislikeToggle = catchAsync(async (req, res, next) => {
     const {slug} = req.params
-    const { _id } = req.user
-    const { saveLike, message, likes } = await questionService.likeSingleQuestion(slug, _id)
+    const { id } = req.user
+    console.log('====================================');
+    console.log(id);
+    console.log('====================================');
+    const { saveLike, message, likes } = await questionService.likeSingleQuestion(slug, id)
     return res.json({
       success: true,
       message: message,

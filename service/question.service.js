@@ -56,30 +56,30 @@ export const getSingleQuestion = async (questionSlug) => {
 
 /**
  *
- * @param {string} slug, _id
+ * @param {string} slug, id
  * @returns {Promise<QuestionModel>}
  */
-export const likeSingleQuestion = async (slug, _id) => {
+export const likeSingleQuestion = async (slug, id) => {
   // Finding Question
-  const question =  await QuestionModel(slug)
+  const question =  await QuestionModel.findOne({questionSlug:slug})
   if (question) {
     // Check if the user who hit the api has already liked the question post before
-    if (question.likedBy.includes(_id)) {
+    if (question.likedBy.includes(id)) {
       // decrease the like count of the question
       question.likeCount--
       // Remove user from array
-      question.likedBy.pull(_id)
+      question.likedBy.pull(id)
       const saveLike = await question.save()
       return {
         saveLike,
-        message: 'Question unliked successful!',
+        message: 'Question disliked successful!',
         likes: `${question.likeCount}`
       }
     } else {
       // increase the Like count of the question
       question.likeCount++
       // Add user to the array
-      question.likedBy.push(_id)
+      question.likedBy.push(id)
       const saveLike = await question.save()
       return {
         saveLike,
