@@ -14,6 +14,7 @@ export const authSocialUser = catchAsync(async (req, res, next) => {
   const user = await userAuthService.authSocialUser(idToken);
   return res.status(200).json({
     success: true,
+    id: user._id,
     email: user.email,
     name: user.name,
     profilePic: user.profilePic,

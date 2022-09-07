@@ -3,11 +3,11 @@
 
 POST http://localhost:5000/private/discussion/new
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5OWI0NjBlM2QwMjM0NjE0ZCIsImlhdCI6MTY2MjQ5MTk2MSwiZXhwIjoxNjYyNTc4MzYxfQ.Vhv9KulHNDRUi65_Sy_Ly8ZCiZjiPAF2zlVWBiitcbU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5OWI0NjBlM2QwMjM0NjE0ZCIsImlhdCI6MTY2MjU3Nzg3NCwiZXhwIjoxNjYyNjY0Mjc0fQ.KVuf27CEULE3cZz0MVLEZvJ0xXG-3Dr6dllBwwgyFWM
 
 {
-            "questionTitle":"This is a dummy question",
-            "questionBody":"This is a dummy question body"
+            "questionTitle":"Design Amazon Web Services",
+            "questionBody":"For the #SystemDesignWeekend, we have an interesting problem - Design Amazon Web Services.I would love to know how you would solve this question."
     }
 
 
@@ -22,7 +22,7 @@ Content-Type: application/json
 ###
 
  // GET SINGLE QUESTION BY QUESTION SLUG
-GET http://localhost:5000/public/discussion/get-single-question/questiontitle
+GET http://localhost:5000/public/discussion/get-single-question/this_is_a_dummy_question_two?id=631507599b460e3d0234614d
 Content-Type: application/json
 
 
@@ -30,9 +30,9 @@ Content-Type: application/json
 
 ###
  // LIKE OR DISLIKE A QUESTION
-PUT http://localhost:5000/private/discussion/like-dislike/questiontitle
+PUT http://localhost:5000/private/discussion/like-dislike/this_is_a_dummy_question_two
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5OWI0NjBlM2QwMjM0NjE0ZCIsImlhdCI6MTY2MjQ5MTk2MSwiZXhwIjoxNjYyNTc4MzYxfQ.Vhv9KulHNDRUi65_Sy_Ly8ZCiZjiPAF2zlVWBiitcbU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5OWI0NjBlM2QwMjM0NjE0ZCIsImlhdCI6MTY2MjU3Nzg3NCwiZXhwIjoxNjYyNjY0Mjc0fQ.KVuf27CEULE3cZz0MVLEZvJ0xXG-3Dr6dllBwwgyFWM
 
 
 

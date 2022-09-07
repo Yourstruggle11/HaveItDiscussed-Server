@@ -9,7 +9,7 @@ import { catchAsync } from '../utils/catchAsync.js';
 export const addNewQuestion = catchAsync(async (req, res, next) => {
   // idToken comes from the client app
   const { questionTitle,questionBody } = req.body
-  const { _id:postedBy } = req.user
+  const { id:postedBy } = req.user
 
   const data = await questionService.postNewQuestion(questionTitle,questionBody,postedBy);
   return res.status(200).json({
@@ -53,12 +53,14 @@ export const getAllQuestions = catchAsync(async (req, res, next) => {
  * */
 export const getSingleQuesion = catchAsync(async (req, res, next) => {
     const { questionSlug } = req.params
+    const { id } = req.query
 
   const question = await questionService.getSingleQuestion(questionSlug);
   return res.status(200).json({
     success: true,
     message: 'Question fetched successfully',
-    question
+    question,
+    isLiked: question.likedBy.includes(id)
   })
 })
 

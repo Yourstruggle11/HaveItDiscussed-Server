@@ -44,7 +44,7 @@ export const getAllQuestions = async (page, limit, search) => {
  * @returns {Promise<QuestionModel>}
  */
 export const getSingleQuestion = async (questionSlug) => {
-    const question = await QuestionModel.findOne({ questionSlug }).populate('postedBy')
+    const question = await QuestionModel.findOne({ questionSlug }).populate('postedBy');
     if (!question) {
         const err = new Error('No question found');
         err.status = 404;
