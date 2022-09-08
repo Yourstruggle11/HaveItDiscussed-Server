@@ -31,8 +31,8 @@ Content-Type: application/json
 ###
  // LIKE OR DISLIKE A QUESTION
 PUT http://localhost:5000/private/discussion/like-dislike/this_is_a_dummy_question_two
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5OWI0NjBlM2QwMjM0NjE0ZCIsImlhdCI6MTY2MjU3Nzg3NCwiZXhwIjoxNjYyNjY0Mjc0fQ.KVuf27CEULE3cZz0MVLEZvJ0xXG-3Dr6dllBwwgyFWM
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5OWI0NjBlM2QwMjM0NjE0ZCIsImlhdCI6MTY2MjU4MDk4MCwiZXhwIjoxNjYyNjY3MzgwfQ.MDl0rgrVGC5zaCTshB01UIZ7O-T493n69eXSrYmarCc
+Content-Type : "application/json"
 
 
 

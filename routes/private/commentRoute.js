@@ -1,11 +1,10 @@
 import express from "express";
-import { addNewComment,getAllCommentsOfAQuestion,likeDislikeToggle } from "../../controllers/comments.controller.js";
+import { addNewComment,likeDislikeToggle } from "../../controllers/comments.controller.js";
 
 const router = express.Router();
 
 // AUTH 
 router.route('/:questionId/create').post(addNewComment)
-router.route('/:questionId').get(getAllCommentsOfAQuestion)
 router.route('/like-dislike/:slug').put(likeDislikeToggle)
 
 

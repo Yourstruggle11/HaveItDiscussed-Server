@@ -72,7 +72,7 @@ export const likeSingleQuestion = async (slug, id) => {
       const saveLike = await question.save()
       return {
         saveLike,
-        message: 'Question disliked successful!',
+        message: 'opps! you disliked the question👎',
         likes: `${question.likeCount}`
       }
     } else {
@@ -83,7 +83,7 @@ export const likeSingleQuestion = async (slug, id) => {
       const saveLike = await question.save()
       return {
         saveLike,
-        message: 'Question liked successful!',
+        message: 'Yeah, You Like this question!👍',
         likes: `${question.likeCount}`
       }
     }
