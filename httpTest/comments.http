@@ -1,0 +1,33 @@
+// POST NEW COMMENT (PROTECTED)
+
+POST http://localhost:5000/private/comments/6318ed1d97a33301c15c8e56/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5OWI0NjBlM2QwMjM0NjE0ZCIsImlhdCI6MTY2MjY2NTA5NCwiZXhwIjoxNjYyNzUxNDk0fQ.Raj_NizQiva9PBkuz21igoUk2yJlRBi6-mFfRUNnX2g
+
+    {
+            "comment":"This is Second dummy comment"
+    }
+
+
+### 
+
+
+// GET ALL COMMENTS OF A QUESTION (PUBLIC)
+
+GET http://localhost:5000/public/comments/6318ed1d97a33301c15c8e56
+Content-Type: application/json
+
+### 
+
+
+// LIKE A COMMENT (PROTECTED)
+
+PUT http://localhost:5000/private/comments/like-dislike/631a49ad085497b7a631c645
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5OWI0NjBlM2QwMjM0NjE0ZCIsImlhdCI6MTY2MjY2NTA5NCwiZXhwIjoxNjYyNzUxNDk0fQ.Raj_NizQiva9PBkuz21igoUk2yJlRBi6-mFfRUNnX2g
+
+
+
+### 
+
+

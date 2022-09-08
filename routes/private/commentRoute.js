@@ -5,7 +5,7 @@ const router = express.Router();
 
 // AUTH 
 router.route('/:questionId/create').post(addNewComment)
-router.route('/like-dislike/:slug').put(likeDislikeToggle)
+router.route('/like-dislike/:commentId').put(likeDislikeToggle)
 
 
 export default router;

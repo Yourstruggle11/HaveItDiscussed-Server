@@ -22,7 +22,7 @@ import CommentModel from "../model/comments.model.js";
  export const getComments = async (questionId) => {
     // Find all comments of a particular questions and popullate them with user
     const comments = await CommentModel.find({ question: questionId })
-      .populate('user')
+      .populate('commentedBy')
       .sort({ updatedAt: -1 })
     return comments
 }
@@ -30,12 +30,12 @@ import CommentModel from "../model/comments.model.js";
 
 /**
  *
- * @param {string} slug, _id
+ * @param {string} commentId, _id
  * @returns {Promise<CommentModel>}
  */
- export const likeSingleComment = async (slug, _id) => {
+ export const likeSingleComment = async (commentId, _id) => {
     // Finding comment
-    const comment = await  CommentModel(slug)
+    const comment = await  CommentModel.findOne({_id:commentId})
     if (comment) {
       // Check if the user who hit the api has already liked the comment post before
       if (comment.likedBy.includes(_id)) {
