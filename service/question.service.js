@@ -8,11 +8,12 @@ import pagination from '../utils/paginate.js'
  * @param {string} questionTitle, questionBody
  * @returns {Promise<QuestionModel>}
  */
-export const postNewQuestion = async (questionTitle,questionBody,postedBy) => {
+export const postNewQuestion = async (questionTitle,questionBody,postedBy,keywords) => {
     const question = new QuestionModel({
         questionTitle,
         questionBody,
-        postedBy
+        postedBy,
+        keywords
       })
       await question.save();
       return question

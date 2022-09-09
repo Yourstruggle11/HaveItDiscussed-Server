@@ -46,7 +46,7 @@ import CommentModel from "../model/comments.model.js";
         const saveLike = await comment.save()
         return {
           saveLike,
-          message: 'Comment unliked successful!',
+          message: 'opps! you disliked the comment👎',
           likes: `${comment.likeCount}`
         }
       } else {
@@ -57,7 +57,7 @@ import CommentModel from "../model/comments.model.js";
         const saveLike = await comment.save()
         return {
           saveLike,
-          message: 'Comment liked successful!',
+          message: 'Yeah, You Like this comment👍',
           likes: `${comment.likeCount}`
         }
       }

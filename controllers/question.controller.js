@@ -8,10 +8,10 @@ import { catchAsync } from '../utils/catchAsync.js';
  */
 export const addNewQuestion = catchAsync(async (req, res, next) => {
   // idToken comes from the client app
-  const { questionTitle,questionBody } = req.body
+  const { questionTitle,questionBody,keywords } = req.body
   const { id:postedBy } = req.user
 
-  const data = await questionService.postNewQuestion(questionTitle,questionBody,postedBy);
+  const data = await questionService.postNewQuestion(questionTitle,questionBody,postedBy,keywords);
   return res.status(200).json({
     success: true,
     message: 'Question posted successfully',

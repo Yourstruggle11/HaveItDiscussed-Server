@@ -7,7 +7,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTUwNzU5O
 
 {
             "questionTitle":"Design Amazon Web Services",
-            "questionBody":"For the #SystemDesignWeekend, we have an interesting problem - Design Amazon Web Services.I would love to know how you would solve this question."
+            "questionBody":"For the #SystemDesignWeekend, we have an interesting problem - Design Amazon Web Services.I would love to know how you would solve this question.",
+            "keywords":["AWS","Amazon","Web Services","System Design"],
     }
 
 
