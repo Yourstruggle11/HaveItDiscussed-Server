@@ -34,7 +34,12 @@ export const addNewQuestion = catchAsync(async (req, res, next) => {
 export const getAllQuestions = catchAsync(async (req, res, next) => {
     const { search, page, limit } = req.query
 
-  const {totalQuestions,questions} = await questionService.getAllQuestions(search, page, limit );
+    // make pre define value if search, page and limit are not provided
+    const pageQuery = page || 1
+    const limitQuery = limit || 5
+
+
+  const {totalQuestions,questions} = await questionService.getAllQuestions(search, pageQuery, limitQuery );
   return res.status(200).json({
     success: true,
     message: 'Questions fetched successfully',
@@ -75,9 +80,6 @@ export const getSingleQuesion = catchAsync(async (req, res, next) => {
 export const likeDislikeToggle = catchAsync(async (req, res, next) => {
     const {slug} = req.params
     const { id } = req.user
-    console.log('====================================');
-    console.log(id);
-    console.log('====================================');
     const { saveLike, message, likes } = await questionService.likeSingleQuestion(slug, id)
     return res.json({
       success: true,

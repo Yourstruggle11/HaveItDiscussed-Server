@@ -25,9 +25,9 @@ export const postNewQuestion = async (questionTitle,questionBody,postedBy,keywor
  * @param {string} N/A
  * @returns {Promise<QuestionModel>}
  */
-export const getAllQuestions = async (page, limit, search) => {
+export const getAllQuestions = async (search, page, limit) => {
       // search keywords and question titles, question body
-  const searchQuery = searchUtility(search)
+  const searchQuery = search == 'false' ? {} : searchUtility(search)
     // get all blogs with search query from QuestionModel and poppulate with author and sort by date and remove question body while calling
     let questions = await QuestionModel.find({ ...searchQuery })
     .populate('postedBy')
