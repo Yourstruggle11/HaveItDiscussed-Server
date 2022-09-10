@@ -1,10 +1,9 @@
-import express from "express";
-import { verifyToken } from "../../controllers/userAuth.controller.js";
+import express from 'express'
+import { verifyToken } from '../../controllers/userAuth.controller.js'
 
-const router = express.Router();
+const router = express.Router()
 
-// AUTH 
+// AUTH
 router.route('/verifyToken').post(verifyToken)
 
-
-export default router;
+export default router

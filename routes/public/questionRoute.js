@@ -1,11 +1,13 @@
-import express from "express";
-import {getAllQuestions,getSingleQuesion} from "../../controllers/question.controller.js";
+import express from 'express'
+import {
+    getAllQuestions,
+    getSingleQuesion
+} from '../../controllers/question.controller.js'
 
-const router = express.Router();
+const router = express.Router()
 
-// AUTH 
+// AUTH
 router.route('/get-all-questions').get(getAllQuestions)
 router.route('/get-single-question/:questionSlug').get(getSingleQuesion)
 
-
-export default router;
+export default router

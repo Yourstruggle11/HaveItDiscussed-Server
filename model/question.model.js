@@ -1,39 +1,38 @@
 import mongoose from 'mongoose'
 import slugify from 'slugify'
 
-
-const questionSchema = new mongoose.Schema({
-    questionTitle:{
-        type:String,
-        required:true
+const questionSchema = new mongoose.Schema(
+    {
+        questionTitle: {
+            type: String,
+            required: true
+        },
+        questionSlug: {
+            type: String,
+            trim: true
+        },
+        questionBody: {
+            type: String,
+            required: true
+        },
+        postedBy: {
+            type: mongoose.Types.ObjectId,
+            ref: 'User'
+        },
+        likeCount: {
+            type: Number,
+            default: 0
+        },
+        likedBy: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
+        keywords: [String]
     },
-    questionSlug:{
-        type: String,
-        trim: true
-    },
-    questionBody:{
-        type:String,
-        required:true
-    },
-    postedBy:{
-        type:mongoose.Types.ObjectId,
-        ref:'User',
-    },
-    likeCount: {
-        type: Number,
-        default: 0
-      },
-    likedBy: [
-        {
-          type: mongoose.Types.ObjectId,
-          ref: 'User'
-        }
-      ],
-      keywords: [String],
-},
-{ timestamps: true }
+    { timestamps: true }
 )
-
 
 questionSchema.pre('validate', function (next) {
     if (this.questionTitle) {
@@ -46,6 +45,6 @@ questionSchema.pre('validate', function (next) {
     next()
 })
 
-const questionModel = mongoose.model('Question', questionSchema);
+const questionModel = mongoose.model('Question', questionSchema)
 
-export default questionModel;
+export default questionModel

@@ -1,10 +1,9 @@
-import express from "express";
-import { authSocialUser } from "../../controllers/userAuth.controller.js";
+import express from 'express'
+import { authSocialUser } from '../../controllers/userAuth.controller.js'
 
-const router = express.Router();
+const router = express.Router()
 
-// AUTH 
+// AUTH
 router.route('/social').post(authSocialUser)
 
-
-export default router;
+export default router
