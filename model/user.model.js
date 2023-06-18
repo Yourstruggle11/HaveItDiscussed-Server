@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
         userName: String,
         userNo: Number,
         profilePic: String,
+        university: String,
         bio: String,
         registerDate: {
             type: Date,
