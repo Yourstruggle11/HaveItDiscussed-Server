@@ -1,6 +1,7 @@
 import admin from '../config/firebase.admin.config.js'
 import UserModel from '../model/user.model.js'
 import jwt from 'jsonwebtoken'
+import slugify from 'slugify'
 
 /**
  *
@@ -16,13 +17,24 @@ export const authSocialUser = async (idToken) => {
             // check if user exist or not if user exist then only return user data otherwise create a new one
             const userExist = await UserModel.findOne({ email: user.email })
 
+            // get no of user in database
+            const userCount = await UserModel.countDocuments()
+
             if (userExist) {
                 return userExist
             } else {
                 const addedUser = new UserModel({
                     email: user.email,
                     name: user.name,
-                    profilePic: user.picture
+                    profilePic: user.picture,
+                    userName: slugify(user.name, {
+                        replacement: '-',
+                        remove: undefined,
+                        lower: true,
+                        strict: true,
+                        locale: 'vi'
+                    }),
+                    userNo: userCount + 1
                 })
                 await addedUser.save()
                 return addedUser

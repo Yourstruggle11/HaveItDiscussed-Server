@@ -7,7 +7,12 @@ const userSchema = new mongoose.Schema(
             type: String,
             unique: true
         },
+        location: String,
+        position: String,
+        userName: String,
+        userNo: Number,
         profilePic: String,
+        bio: String,
         registerDate: {
             type: Date,
             default: Date.now
