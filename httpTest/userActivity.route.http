@@ -13,3 +13,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY1MWZkN
 
 
 ###
+
+// Get user details by user name and user no
+GET http://localhost:5000/public/user-activities/2/mohon-kumar-das
+Content-Type: application/json
+
+
+###
