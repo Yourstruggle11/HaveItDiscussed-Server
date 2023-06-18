@@ -20,7 +20,9 @@ export const authSocialUser = catchAsync(async (req, res, next) => {
         profilePic: user.profilePic,
         registerDate: user.registerDate,
         accessToken: idToken,
-        JwtToken: generateAuthToken(user._id)
+        JwtToken: generateAuthToken(user._id),
+        userName: user.userName,
+        userNo: user.userNo,
     })
 })
 
