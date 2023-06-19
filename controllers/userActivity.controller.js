@@ -23,11 +23,13 @@ export const updateProfile = catchAsync(async (req, res) => {
  */
 export const getUserDetailsByUserNameAndNo = catchAsync(async (req, res) => {
     const { userName, userNo } = req.params
-    const getUserDetailsByUserNameAndNo =
+    const {user:getUserDetailsByUserNameAndNo,totalLikes,totalComments} =
         await userActivityService.getUserDetailsByUserNameAndNo(userName,userNo)
     return res.status(200).json({
         success: true,
         message: 'User details fetched successfully',
-        data: getUserDetailsByUserNameAndNo
+        data: getUserDetailsByUserNameAndNo,
+        totalLikes,
+        totalComments
     })
 })

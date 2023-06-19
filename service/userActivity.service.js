@@ -1,5 +1,9 @@
 import ErrorHandler from '../middlewares/ErrorClass.js'
+import questionModel from '../model/question.model.js'
+import CommentModel from '../model/comments.model.js'
 import UserModel from '../model/user.model.js'
+import mongoose from 'mongoose'
+import { userStatsService } from './index.js'
 
 /**
  * @param {string} userId
@@ -35,7 +39,7 @@ export const updateProfile = async (userId, body) => {
             throw ErrorHandler.notFoundError('User not found')
         }
 
-        return updateProfile
+        return updatedUser
     } catch (error) {
         throw ErrorHandler.badRequestError(error.message)
     }
@@ -57,7 +61,13 @@ export const getUserDetailsByUserNameAndNo = async (userName, userNo) => {
             throw ErrorHandler.notFoundError('User not found')
         }
 
-        return user
+        // Get total likes of user
+        const totalLikes = await userStatsService.getUserTotalLikes(user._id)
+
+        // Get total comments of user
+        const totalComments = await userStatsService.getUserTotalComments(user._id)
+
+        return { user, totalLikes, totalComments }
     } catch (error) {
         throw ErrorHandler.badRequestError(error.message)
     }
