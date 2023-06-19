@@ -50,50 +50,59 @@ export const updateProfile = async (userId, body) => {
  * @returns {Promise<UserDetails>}
  */
 export const getUserDetailsByUserNameAndNo = async (userName, userNo, viewerId) => {
-  try {
-    const user = await UserModel.findOne(
-      { userName, userNo },
-      { __v: 0, updagetUserDetailstedAt: 0 }
-    )
+    try {
+        const user = await UserModel.findOne(
+            { userName, userNo },
+            { __v: 0, updagetUserDetailstedAt: 0 }
+        )
 
-    if (!user) {
-      throw ErrorHandler.notFoundError('User not found')
+        if (!user) {
+            throw ErrorHandler.notFoundError('User not found')
+        }
+
+        const userDetails = user.toObject()
+
+        if (viewerId) {
+            const isFriend = await FriendModel.exists({
+                $or: [
+                    {
+                        sender: viewerId,
+                        recipient: userDetails._id
+                    },
+                    {
+                        sender: userDetails._id,
+                        recipient: viewerId
+                    }
+                ],
+                status: 'accepted'
+            })
+
+            userDetails.isFriend = !!isFriend
+
+            const [isPending, isFriendRequestReceived] = await Promise.all([
+                FriendModel.exists({
+                    sender: viewerId,
+                    recipient: userDetails._id,
+                    status: 'pending'
+                }),
+                FriendModel.exists({
+                    sender: userDetails._id,
+                    recipient: viewerId,
+                    status: 'pending'
+                })
+            ])
+
+            userDetails.isPending = !!isPending
+            userDetails.isFriendRequestReceived = !!isFriendRequestReceived
+        }
+
+        const totalLikes = await userStatsService.getUserTotalLikes(userDetails._id)
+        const totalComments = await userStatsService.getUserTotalComments(
+            userDetails._id
+        )
+
+        return { userDetails, totalLikes, totalComments }
+    } catch (error) {
+        throw ErrorHandler.badRequestError(error.message)
     }
-
-    const userDetails = user.toObject()
-
-    if (viewerId) {
-      const isFriend = await FriendModel.exists({
-        $or: [
-          {
-            sender: viewerId,
-            recipient: userDetails._id
-          },
-          {
-            sender: userDetails._id,
-            recipient: viewerId
-          }
-        ],
-        status: 'accepted'
-      })
-
-      userDetails.isFriend = !!isFriend
-
-      const isPending = await FriendModel.exists({
-        sender: viewerId,
-        recipient: userDetails._id,
-        status: 'pending'
-      })
-
-      userDetails.isPending = !!isPending
-    }
-
-    const totalLikes = await userStatsService.getUserTotalLikes(userDetails._id)
-    const totalComments = await userStatsService.getUserTotalComments(userDetails._id)
-
-    return { userDetails, totalLikes, totalComments }
-  } catch (error) {
-    throw ErrorHandler.badRequestError(error.message)
-  }
 }
-
