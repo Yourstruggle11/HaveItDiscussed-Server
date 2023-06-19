@@ -1,8 +1,5 @@
 import ErrorHandler from '../middlewares/ErrorClass.js'
-import questionModel from '../model/question.model.js'
-import CommentModel from '../model/comments.model.js'
 import UserModel from '../model/user.model.js'
-import mongoose from 'mongoose'
 import { userStatsService } from './index.js'
 import FriendModel from '../model/friends.model.js'
 
@@ -80,7 +77,7 @@ export const getUserDetailsByUserNameAndNo = async (userName, userNo, viewerId) 
         status: 'accepted'
       })
 
-      userDetails.isFriend = isFriend
+      userDetails.isFriend = !!isFriend
 
       const isPending = await FriendModel.exists({
         sender: viewerId,
@@ -88,7 +85,7 @@ export const getUserDetailsByUserNameAndNo = async (userName, userNo, viewerId) 
         status: 'pending'
       })
 
-      userDetails.isPending = isPending
+      userDetails.isPending = !!isPending
     }
 
     const totalLikes = await userStatsService.getUserTotalLikes(userDetails._id)

@@ -1,0 +1,12 @@
+// Send friend request(PROTECTED)
+
+POST http://localhost:5000/private/friends/add-friend
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY1MWZkNDRhY2MzYTdjMzM1Zjc1YyIsImlhdCI6MTY4NzIxMjg5NywiZXhwIjoxNjg3Mjk5Mjk3fQ.btANMsVNJw2KWbL2pUwSeJm9HrZEXXvO_nSVJoxcmzI
+
+{
+    "recipientId": "648f495496e8be5266f2d698"
+}
+
+
+###
