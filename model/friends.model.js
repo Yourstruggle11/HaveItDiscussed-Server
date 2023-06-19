@@ -19,6 +19,6 @@ const friendsSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-const friendModel = mongoose.model('Friend', friendsSchema)
+const FriendModel = mongoose.model('Friend', friendsSchema)
 
-export default friendModel
+export default FriendModel

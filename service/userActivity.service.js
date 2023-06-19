@@ -4,6 +4,7 @@ import CommentModel from '../model/comments.model.js'
 import UserModel from '../model/user.model.js'
 import mongoose from 'mongoose'
 import { userStatsService } from './index.js'
+import FriendModel from '../model/friends.model.js'
 
 /**
  * @param {string} userId
@@ -48,27 +49,54 @@ export const updateProfile = async (userId, body) => {
 /**
  * @param {string} userName
  * @param {string} userNo
- * @returns {Promise<UserModel>}
+ * @param {string} viewerId
+ * @returns {Promise<UserDetails>}
  */
-export const getUserDetailsByUserNameAndNo = async (userName, userNo) => {
-    try {
-        // Get user details by user name and user no
-        const user = await UserModel.findOne(
-            { userName, userNo },
-            { __v: 0, updatedAt: 0 }
-        )
-        if (!user) {
-            throw ErrorHandler.notFoundError('User not found')
-        }
+export const getUserDetailsByUserNameAndNo = async (userName, userNo, viewerId) => {
+  try {
+    const user = await UserModel.findOne(
+      { userName, userNo },
+      { __v: 0, updagetUserDetailstedAt: 0 }
+    )
 
-        // Get total likes of user
-        const totalLikes = await userStatsService.getUserTotalLikes(user._id)
-
-        // Get total comments of user
-        const totalComments = await userStatsService.getUserTotalComments(user._id)
-
-        return { user, totalLikes, totalComments }
-    } catch (error) {
-        throw ErrorHandler.badRequestError(error.message)
+    if (!user) {
+      throw ErrorHandler.notFoundError('User not found')
     }
+
+    const userDetails = user.toObject()
+
+    if (viewerId) {
+      const isFriend = await FriendModel.exists({
+        $or: [
+          {
+            sender: viewerId,
+            recipient: userDetails._id
+          },
+          {
+            sender: userDetails._id,
+            recipient: viewerId
+          }
+        ],
+        status: 'accepted'
+      })
+
+      userDetails.isFriend = isFriend
+
+      const isPending = await FriendModel.exists({
+        sender: viewerId,
+        recipient: userDetails._id,
+        status: 'pending'
+      })
+
+      userDetails.isPending = isPending
+    }
+
+    const totalLikes = await userStatsService.getUserTotalLikes(userDetails._id)
+    const totalComments = await userStatsService.getUserTotalComments(userDetails._id)
+
+    return { userDetails, totalLikes, totalComments }
+  } catch (error) {
+    throw ErrorHandler.badRequestError(error.message)
+  }
 }
+
