@@ -14,10 +14,16 @@ const userSchema = new mongoose.Schema(
         profilePic: String,
         university: String,
         bio: String,
-        registerDate: {
+        registerDate: { //TODO: do we need this?
             type: Date,
             default: Date.now
-        }
+        },
+        friendList: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: 'User'
+            }
+        ]
     },
     { timestamps: true }
 )
