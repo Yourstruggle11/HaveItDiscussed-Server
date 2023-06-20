@@ -47,3 +47,36 @@ export const addFriend = async (senderId, recipientId) => {
         throw ErrorHandler.badRequestError(error.message)
     }
 }
+
+/**
+ * @param {string} senderId
+ * @param {string} recipientId
+ * @returns {Promise<FriendModel>}
+ */
+export const cancelFriendRequest = async (senderId, recipientId) => {
+    try {
+        const friendRequest = await FriendModel.findOneAndDelete({
+            $or: [
+                { sender: senderId, recipient: recipientId },
+                { sender: recipientId, recipient: senderId }
+            ],
+            status: 'pending'
+        })
+
+        if (!friendRequest) {
+            throw ErrorHandler.notFoundError('Friend request not found')
+        }
+        
+        let message = ''
+
+        if (friendRequest.sender.toString() === senderId) {
+            message = 'Firiend request cancelled successfully'
+        } else if (friendRequest.sender.toString() === recipientId) {
+            message = 'Friend request rejected successfully'
+        }
+
+        return { message, friendRequest }
+    } catch (error) {
+        throw ErrorHandler.badRequestError(error.message)
+    }
+}

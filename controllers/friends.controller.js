@@ -16,3 +16,20 @@ export const addFriend = catchAsync(async (req, res) => {
         data: addFriend
     })
 })
+
+/**
+ * * @NOTE: This API will be used to cancel and reject friend request both
+ * @description Cancel Friend Request (Cancel a friend request you sent)
+ * @route POST private/friends/cancel-request
+ * @access private
+ */
+export const cancelFriendRequest = catchAsync(async (req, res) => {
+    const { recipientId } = req.body
+    const { id: senderId } = req.user
+    const { message, friendRequest:cancelFriendRequest } = await friendsService.cancelFriendRequest(senderId, recipientId)
+    return res.status(200).json({
+        success: true,
+        message: message,
+        data: cancelFriendRequest
+    })
+})

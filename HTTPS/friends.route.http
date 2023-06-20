@@ -10,3 +10,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY1MWZkN
 
 
 ###
+
+// Cancel or reject friend request (PROTECTED)
+
+POST http://localhost:5000/private/friends/cancel-request
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY0OTU0OTZlOGJlNTI2NmYyZDY5OCIsImlhdCI6MTY4NzI5MDU2MiwiZXhwIjoxNjg3Mzc2OTYyfQ.EAp8G-KB31xqewGvFmNEPRsrsJ9x8IpTviK1r-ki4ao
+
+{
+    "recipientId": "648f51fd44acc3a7c335f75c"
+}
+
+
+###
