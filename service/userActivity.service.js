@@ -62,7 +62,7 @@ export const getUserDetailsByUserNameAndNo = async (userName, userNo, viewerId) 
 
         const userDetails = user.toObject()
 
-        if (viewerId) {
+        if (viewerId !== 'undefined') {
             const isFriend = await FriendModel.exists({
                 $or: [
                     {

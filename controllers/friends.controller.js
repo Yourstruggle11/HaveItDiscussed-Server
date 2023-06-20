@@ -61,7 +61,7 @@ export const removeFriend = catchAsync(async (req, res) => {
     const removeFriend = await friendsService.removeFriend(userId, friendId)
     return res.status(200).json({
         success: true,
-        message: "Removed friend successfully",
+        message: "Removed from friend list successfully",
         data: removeFriend
     })
 })
