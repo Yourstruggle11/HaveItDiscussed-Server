@@ -66,7 +66,7 @@ export const cancelFriendRequest = async (senderId, recipientId) => {
         if (!friendRequest) {
             throw ErrorHandler.notFoundError('Friend request not found')
         }
-        
+
         let message = ''
 
         if (friendRequest.sender.toString() === senderId) {
@@ -76,6 +76,46 @@ export const cancelFriendRequest = async (senderId, recipientId) => {
         }
 
         return { message, friendRequest }
+    } catch (error) {
+        throw ErrorHandler.badRequestError(error.message)
+    }
+}
+
+/**
+ * @param {string} senderId
+ * @param {string} recipientId
+ * @returns {Promise<FriendModel>}
+ */
+export const acceptFriendRequest = async (senderId, recipientId) => {
+    try {
+        const friendRequest = await FriendModel.findOneAndUpdate(
+            {
+                sender: senderId,
+                recipient: recipientId,
+                status: 'pending'
+            },
+            { status: 'accepted' },
+            { new: true }
+        )
+
+        if (!friendRequest) {
+            throw ErrorHandler.notFoundError('Friend request not found')
+        }
+
+        await Promise.all([
+            UserModel.findByIdAndUpdate(
+                senderId,
+                { $push: { friendList: recipientId } },
+                { new: true }
+            ),
+            UserModel.findByIdAndUpdate(
+                recipientId,
+                { $push: { friendList: senderId } },
+                { new: true }
+            )
+        ])
+
+        return friendRequest
     } catch (error) {
         throw ErrorHandler.badRequestError(error.message)
     }

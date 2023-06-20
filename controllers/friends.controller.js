@@ -33,3 +33,19 @@ export const cancelFriendRequest = catchAsync(async (req, res) => {
         data: cancelFriendRequest
     })
 })
+
+/**
+ * @description Accept Friend Request (Accept a friend request you received)
+ * @route POST private/friends/accept-friend-request
+ * @access private
+ */
+export const acceptFriendRequest = catchAsync(async (req, res) => {
+    const { senderId } = req.body
+    const { id: recipientId } = req.user
+    const acceptFriendRequest = await friendsService.acceptFriendRequest(senderId, recipientId)
+    return res.status(200).json({
+        success: true,
+        message: "Friend request accepted successfully",
+        data: acceptFriendRequest
+    })
+})
