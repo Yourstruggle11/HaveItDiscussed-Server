@@ -7,11 +7,23 @@ const userSchema = new mongoose.Schema(
             type: String,
             unique: true
         },
+        location: String,
+        position: String,
+        userName: String,
+        userNo: Number,
         profilePic: String,
-        registerDate: {
+        university: String,
+        bio: String,
+        registerDate: { //TODO: do we need this?
             type: Date,
             default: Date.now
-        }
+        },
+        friendList: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: 'User'
+            }
+        ]
     },
     { timestamps: true }
 )

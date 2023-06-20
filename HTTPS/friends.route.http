@@ -1,0 +1,51 @@
+// Send friend request(PROTECTED)
+
+POST http://localhost:5000/private/friends/add-friend
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY1MWZkNDRhY2MzYTdjMzM1Zjc1YyIsImlhdCI6MTY4NzIxMjg5NywiZXhwIjoxNjg3Mjk5Mjk3fQ.btANMsVNJw2KWbL2pUwSeJm9HrZEXXvO_nSVJoxcmzI
+
+{
+    "recipientId": "648f495496e8be5266f2d698"
+}
+
+
+###
+
+// Cancel or reject friend request (PROTECTED)
+
+POST http://localhost:5000/private/friends/cancel-request
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY0OTU0OTZlOGJlNTI2NmYyZDY5OCIsImlhdCI6MTY4NzI5MDU2MiwiZXhwIjoxNjg3Mzc2OTYyfQ.EAp8G-KB31xqewGvFmNEPRsrsJ9x8IpTviK1r-ki4ao
+
+{
+    "recipientId": "648f51fd44acc3a7c335f75c"
+}
+
+
+###
+
+// Accept friend request (PROTECTED)
+
+POST http://localhost:5000/private/friends/accept-friend-request
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY0OTU0OTZlOGJlNTI2NmYyZDY5OCIsImlhdCI6MTY4NzI5MDU2MiwiZXhwIjoxNjg3Mzc2OTYyfQ.EAp8G-KB31xqewGvFmNEPRsrsJ9x8IpTviK1r-ki4ao
+
+{
+    "senderId": "648f51fd44acc3a7c335f75c"
+}
+
+
+###
+
+// Remove friend (PROTECTED)
+
+POST http://localhost:5000/private/friends/remove-friend
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY0OTU0OTZlOGJlNTI2NmYyZDY5OCIsImlhdCI6MTY4NzI5MDU2MiwiZXhwIjoxNjg3Mzc2OTYyfQ.EAp8G-KB31xqewGvFmNEPRsrsJ9x8IpTviK1r-ki4ao
+
+{
+    "friendId": "648f51fd44acc3a7c335f75c"
+}
+
+
+###

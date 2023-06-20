@@ -1,0 +1,22 @@
+// Update user Profile
+PUT http://localhost:5000/private/user-activities/update-profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY1MWZkNDRhY2MzYTdjMzM1Zjc1YyIsImlhdCI6MTY4NzExNDIzNywiZXhwIjoxNjg3MjAwNjM3fQ.-iaDLww4zGi7SCKr4bbxzWznLsnEHnBL5dkd5SwpRwk
+
+{
+    "firstName":"Mohon",
+    "lastName":"Kumar Das",
+    "location":"Kolkata, India",
+    "position":"Software Development Engineer (Frontend)",
+    "university":"University of Calcutta"
+}
+
+
+###
+
+// Get user details by user name and user no
+GET http://localhost:5000/public/user-activities/2/mohon-kumar-das
+Content-Type: application/json
+
+
+###
