@@ -49,3 +49,19 @@ export const acceptFriendRequest = catchAsync(async (req, res) => {
         data: acceptFriendRequest
     })
 })
+
+/**
+ * @description Remove Friend (Remove a friend from your friend list)
+ * @route POST private/friends/remove-friend
+ * @access private
+ */
+export const removeFriend = catchAsync(async (req, res) => {
+    const { friendId  } = req.body
+    const { id: userId  } = req.user
+    const removeFriend = await friendsService.removeFriend(userId, friendId)
+    return res.status(200).json({
+        success: true,
+        message: "Removed friend successfully",
+        data: removeFriend
+    })
+})

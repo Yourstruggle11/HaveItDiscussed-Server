@@ -120,3 +120,45 @@ export const acceptFriendRequest = async (senderId, recipientId) => {
         throw ErrorHandler.badRequestError(error.message)
     }
 }
+
+/**
+ * @param {string} userId
+ * @param {string} friendId
+ * @returns {Promise<FriendModel>}
+ */
+export const removeFriend = async (userId, friendId) => {
+    try {
+        const [user, friend] = await Promise.all([
+            UserModel.findByIdAndUpdate(
+                userId,
+                { $pull: { friendList: friendId } },
+                { new: true }
+            ),
+            UserModel.findByIdAndUpdate(
+                friendId,
+                { $pull: { friendList: userId } },
+                { new: true }
+            )
+        ])
+
+        if (!user || !friend) {
+            throw ErrorHandler.notFoundError('User or friend not found')
+        }
+
+        const removedFromFriendList = await FriendModel.findOneAndDelete({
+            $or: [
+                { sender: userId, recipient: friendId },
+                { sender: friendId, recipient: userId }
+            ],
+            status: 'accepted'
+        })
+
+        if (!removedFromFriendList) {
+            throw ErrorHandler.notFoundError('You are not friends with this user')
+        }
+
+        return removedFromFriendList
+    } catch (error) {
+        throw ErrorHandler.badRequestError(error.message)
+    }
+}
