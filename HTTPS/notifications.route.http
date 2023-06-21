@@ -7,3 +7,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY1MWZkN
 
 
 ###
+
+// mark single or all notifications as read
+
+POST http://localhost:5000/private/notifications/mark-as-read
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY0OTU0OTZlOGJlNTI2NmYyZDY5OCIsImlhdCI6MTY4NzM4NjY0NSwiZXhwIjoxNjg3NDczMDQ1fQ.0g4cOnj_TQQ5uof9y4q-9IR8mb9-k6eAT3DBOu7ZIYc # Souvik
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGY1MWZkNDRhY2MzYTdjMzM1Zjc1YyIsImlhdCI6MTY4NzM4ODgwMSwiZXhwIjoxNjg3NDc1MjAxfQ.FDhY4o_986RwkNvVQ8WjHh_LwU8P9wPibShECRIlpQQ
+
+{
+    "markAll": true
+}
+
+###
