@@ -4,25 +4,22 @@ const notificationsSchema = new mongoose.Schema(
     {
         sender: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
+            ref: 'User'
         },
         recipient: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
+            ref: 'User'
         },
         type: {
-            type: String,
+            type: Number,
             required: true,
-            enum: [
-                'Friend request received',
-                'Friend request accept',
-                'Comment received on question',
-                'Like received on question',
-                'Like received on comment',
-                'New question posted'
-            ]
+            enum: [1, 2, 3, 4, 5, 6],
+            description: `1: Friend request received
+            2: Friend request accept
+            3: Comment received on question
+            4: Like received on question
+            5: Like received on comment
+            6: New question posted`
         },
         message: {
             type: String,
@@ -34,9 +31,19 @@ const notificationsSchema = new mongoose.Schema(
         },
         actionURL: {
             type: String,
-            required: true
+            description: `
+            1: /users/{userNo}/{userName}
+            2: /users/{userNo}/{userName}
+            3: /question/{questionSlug}
+            4: /question/{questionSlug}
+            5: /question/{questionSlug}
+            6: /question/{questionSlug}
+            `
         },
-        anyActionNeeded: Boolean,
+        anyActionNeeded: {
+            type: Boolean,
+            default: true
+        },
         isGeneralNotification: {
             type: Boolean,
             default: false
@@ -45,7 +52,7 @@ const notificationsSchema = new mongoose.Schema(
     { timestamps: true }
 )
 
-const NotificationModel = mongoose.model('Friend', notificationsSchema)
+const NotificationModel = mongoose.model('Notification', notificationsSchema)
 
 export default NotificationModel
 

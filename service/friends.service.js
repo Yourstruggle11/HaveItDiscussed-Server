@@ -1,6 +1,7 @@
 import ErrorHandler from '../middlewares/ErrorClass.js'
 import UserModel from '../model/user.model.js'
 import FriendModel from '../model/friends.model.js'
+import { AddNotification } from './notifications.service.js'
 
 /**
  * @param {string} senderId
@@ -41,6 +42,17 @@ export const addFriend = async (senderId, recipientId) => {
         })
 
         await friendRequest.save()
+
+        // Send notification to the recipient
+        await AddNotification({
+            sender: senderId,
+            recipient: recipientId,
+            type: 1,
+            message: `${sender.name} sent you a friend request`,
+            actionURL: `/users/${sender.userNo}/${sender.userName}`,
+            anyActionNeeded: true,
+            isGeneralNotification: false
+        })
 
         return friendRequest
     } catch (error) {
@@ -102,7 +114,7 @@ export const acceptFriendRequest = async (senderId, recipientId) => {
             throw ErrorHandler.notFoundError('Friend request not found')
         }
 
-        await Promise.all([
+        const [_, recipient] = await Promise.all([
             UserModel.findByIdAndUpdate(
                 senderId,
                 { $push: { friendList: recipientId } },
@@ -114,6 +126,17 @@ export const acceptFriendRequest = async (senderId, recipientId) => {
                 { new: true }
             )
         ])
+
+        // Send notification to the friend request sender
+        await AddNotification({
+            sender: recipientId, //* because the sender (Who initiates this notification) is the recipient of the friend request
+            recipient: senderId, //* because the recipient (Who receives this notification) is the sender of the friend request
+            type: 2,
+            message: `${recipient.name} accepted your friend request`,
+            actionURL: `/users/${recipient.userNo}/${recipient.userName}`,
+            anyActionNeeded: true,
+            isGeneralNotification: false
+        })
 
         return friendRequest
     } catch (error) {

@@ -1,6 +1,8 @@
 import QuestionModel from '../model/question.model.js'
 import searchUtility from '../utils/search.js'
 import pagination from '../utils/paginate.js'
+import UserModel from '../model/user.model.js'
+import { AddNotification } from './notifications.service.js'
 
 /**
  *
@@ -20,6 +22,17 @@ export const postNewQuestion = async (
         keywords
     })
     await question.save()
+
+    const whoPostedNewQuestion = await UserModel.findById(postedBy)
+
+    await AddNotification({
+        sender: postedBy,
+        type: 6,
+        message: `${whoPostedNewQuestion?.name} posted a new question`,
+        actionURL: `/question/${question.questionSlug}`,
+        anyActionNeeded: true,
+        isGeneralNotification: true
+    })
     return question
 }
 
@@ -85,6 +98,21 @@ export const likeSingleQuestion = async (slug, id) => {
             // Add user to the array
             question.likedBy.push(id)
             const saveLike = await question.save()
+
+            // Check if the user who liked the comment is not the owner of the comment
+            if (id !== question?.postedBy.toString()) {
+                const whoLiked = await UserModel.findById(id)
+
+                await AddNotification({
+                    sender: id,
+                    recipient: question?.postedBy,
+                    type: 4,
+                    message: `${whoLiked.name} liked your question`,
+                    actionURL: `/question/${slug}`,
+                    anyActionNeeded: true,
+                    isGeneralNotification: false
+                })
+            }
             return {
                 saveLike,
                 message: 'Yeah, You Like this question!👍',

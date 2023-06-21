@@ -1,8 +1,13 @@
 import CommentModel from '../model/comments.model.js'
+import questionModel from '../model/question.model.js'
+import UserModel from '../model/user.model.js'
+import { AddNotification } from './notifications.service.js'
 
 /**
  *
- * @param {string} comment,commentedBy,questionId
+ * @param {string} comment
+ * @param {string} commentedBy
+ * @param {string} questionId
  * @returns {Promise<CommentModel>}
  */
 export const createComment = async (comment, commentedBy, questionId) => {
@@ -12,6 +17,23 @@ export const createComment = async (comment, commentedBy, questionId) => {
         question: questionId
     })
     await newComment.save()
+    // Find the user who commented
+    const sender = await UserModel.findById(commentedBy)
+    const question = await questionModel.findById(questionId)
+
+    // Check if the user who commented is not the owner of the question
+    if (commentedBy !== question?.postedBy.toString()) {
+        await AddNotification({
+            sender: commentedBy,
+            recipient: question?.postedBy,
+            type: 3,
+            message: `${sender.name} commented on your question`,
+            actionURL: `/question/${question?.questionSlug}`,
+            anyActionNeeded: true,
+            isGeneralNotification: false
+        })
+    }
+
     return newComment
 }
 /**
@@ -54,6 +76,23 @@ export const likeSingleComment = async (commentId, _id) => {
             // Add user to the array
             comment.likedBy.push(_id)
             const saveLike = await comment.save()
+
+            // Check if the user who liked the comment is not the owner of the comment
+            if (_id !== comment?.commentedBy.toString()) {
+                const whoLiked = await UserModel.findById(_id)
+                const getQuestionSlug = await questionModel.findById(
+                    comment?.question
+                )
+                await AddNotification({
+                    sender: _id,
+                    recipient: comment?.commentedBy,
+                    type: 5,
+                    message: `${whoLiked.name} liked your comment`,
+                    actionURL: `/question/${getQuestionSlug?.questionSlug}`,
+                    anyActionNeeded: true,
+                    isGeneralNotification: false
+                })
+            }
             return {
                 saveLike,
                 message: 'Yeah, You Like this comment👍',

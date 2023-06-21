@@ -4,3 +4,4 @@ export * as commentsService from './comments.service.js'
 export * as userActivityService from './userActivity.service.js';
 export * as userStatsService from './userStats.service.js';
 export * as friendsService from './friends.service.js';
+export * as notificationsService from './notifications.service.js';
