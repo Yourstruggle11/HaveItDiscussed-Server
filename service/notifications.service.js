@@ -38,3 +38,27 @@ export const AddNotification = async (requestBody) => {
         throw ErrorHandler.badRequestError(error.message)
     }
 }
+
+/**
+ * @param {string} userId
+ * @returns {Promise<NotificationModel>}
+ */
+export const getAllNotifications = async (userId) => {
+    try {
+        // Find unread notifications for the specified recipient where isGeneralNotification is true
+        const unreadNotifications = await NotificationModel.find({
+            $or: [
+                { recipient: userId, isRead: false },
+                {
+                    isGeneralNotification: true,
+                    sender: { $ne: userId },
+                    isRead: false
+                }
+            ]
+        }).sort({ createdAt: -1 })
+
+        return unreadNotifications
+    } catch (error) {
+        throw ErrorHandler.badRequestError(error.message)
+    }
+}

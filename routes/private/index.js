@@ -4,6 +4,7 @@ import questionRoute from './questionRoute.js'
 import commentRoute from './commentRoute.js'
 import userActivityRoute from './userActivity.route.js';
 import friendsRoute from './friends.route.js';
+import notificationRoute from './notifications.route.js';
 import { userRouteProtection } from '../../middlewares/authMiddleware.js'
 
 const router = express.Router()
@@ -18,5 +19,8 @@ router.use('/user-activities', userRouteProtection, userActivityRoute);
 
 // FRIENDS ROUTES
 router.use('/friends', userRouteProtection, friendsRoute);
+
+// NOTIFICATION ROUTES
+router.use('/notifications', userRouteProtection, notificationRoute)
 
 export default router
