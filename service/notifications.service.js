@@ -108,3 +108,26 @@ export const markAsRead = async (userId, markAll, notificationId) => {
         throw ErrorHandler.badRequestError(error.message)
     }
 }
+
+/**
+ * @param {string} userId
+ * @returns {Promise<NotificationModel>}
+ */
+export const getRecentNotifications = async (userId) => {
+    try {
+        const lastTenNotifications = await NotificationModel.find({
+            $or: [
+                { recipient: userId, isRead: false },
+                {
+                    isGeneralNotification: true,
+                    sender: { $ne: userId },
+                    isRead: false
+                }
+            ]
+        }).sort({ createdAt: -1 }).limit(10);
+
+        return lastTenNotifications
+    } catch (error) {
+        throw ErrorHandler.badRequestError(error.message)
+    }
+}

@@ -17,6 +17,7 @@ export const getAllNotifications = catchAsync(async (req, res) => {
         data: getAllNotifications
     })
 })
+
 /**
  * @description Mark single or all notification as read
  * @route POST private/notifications/mark-as-read
@@ -33,5 +34,22 @@ export const markAsRead = catchAsync(async (req, res) => {
     return res.status(200).json({
         success: true,
         message: markAsRead
+    })
+})
+
+/**
+ * @description Gets last 10 unread notifications for the logged in user
+ * @route GET private/notifications/recent-notifications
+ * @access private
+ */
+export const getRecentNotifications = catchAsync(async (req, res) => {
+    const { id: userId } = req.user
+    const getRecentNotifications = await notificationsService.getRecentNotifications(
+        userId
+    )
+    return res.status(200).json({
+        success: true,
+        message: 'Last 10 unread notifications fetched successfully',
+        data: getRecentNotifications
     })
 })
