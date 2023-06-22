@@ -48,11 +48,10 @@ export const getAllNotifications = async (userId) => {
         // Find unread notifications for the specified recipient where isGeneralNotification is true
         const unreadNotifications = await NotificationModel.find({
             $or: [
-                { recipient: userId, isRead: false },
+                { recipient: userId },
                 {
                     isGeneralNotification: true,
-                    sender: { $ne: userId },
-                    isRead: false
+                    sender: { $ne: userId }
                 }
             ]
         }).sort({ createdAt: -1 })
@@ -116,15 +115,11 @@ export const markAsRead = async (userId, markAll, notificationId) => {
 export const getRecentNotifications = async (userId) => {
     try {
         const lastTenNotifications = await NotificationModel.find({
-            $or: [
-                { recipient: userId, isRead: false },
-                {
-                    isGeneralNotification: true,
-                    sender: { $ne: userId },
-                    isRead: false
-                }
-            ]
-        }).sort({ createdAt: -1 }).limit(10);
+            recipient: userId,
+            isRead: false
+        })
+            .sort({ createdAt: -1 })
+            .limit(10)
 
         return lastTenNotifications
     } catch (error) {
