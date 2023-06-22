@@ -54,7 +54,9 @@ export const getAllNotifications = async (userId) => {
                     sender: { $ne: userId }
                 }
             ]
-        }).sort({ createdAt: -1 })
+        })
+            .sort({ createdAt: -1 })
+            .populate('sender', 'profilePic')
 
         return unreadNotifications
     } catch (error) {
@@ -118,6 +120,7 @@ export const getRecentNotifications = async (userId) => {
             recipient: userId,
             isRead: false
         })
+            .populate('sender', 'profilePic')
             .sort({ createdAt: -1 })
             .limit(10)
 

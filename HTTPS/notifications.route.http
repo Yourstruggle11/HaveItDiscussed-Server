@@ -1,4 +1,4 @@
-// Get all unread notifications
+// Get all notifications
 
 GET http://localhost:5000/private/notifications/get-all
 Content-Type: application/json

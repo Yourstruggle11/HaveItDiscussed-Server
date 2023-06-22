@@ -2,7 +2,7 @@ import { notificationsService } from '../service/index.js'
 import { catchAsync } from '../utils/catchAsync.js'
 
 /**
- * @description Get all unread notifications for the logged in user
+ * @description Get all notifications for the logged in user
  * @route GET private/notifications/get-all
  * @access private
  */
