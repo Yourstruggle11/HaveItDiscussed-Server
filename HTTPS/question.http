@@ -38,3 +38,9 @@ Content-Type : "application/json"
 
 
 ###
+
+// GET TOP AND RECENT QUESTIONS (PUBLIC)
+GET http://localhost:5000/public/discussion/questions/top-recent
+Content-Type: application/json
+
+###

@@ -75,6 +75,23 @@ export const getSingleQuesion = catchAsync(async (req, res, next) => {
 })
 
 /**
+ * @description Get Top 3 and Recent 3 questions from DB
+ * @route GET /discussion/questions/top-recent
+ * @access Public
+ *
+ * */
+export const getTopAndRecentQuestions = catchAsync(async (req, res, next) => {
+
+    const {topQuestions, recentQuestions} = await questionService.getTopAndRecentQuestions()
+    return res.status(200).json({
+        success: true,
+        message: 'Top and Recent Questions fetched successfully',
+        topQuestions, 
+        recentQuestions
+    })
+})
+
+/**
  * @description Like a questions by user if user is authenticated
  *              If the question is already liked unlike the questions from the user
  * @routes PUT/discussion/like-dislike/:slug

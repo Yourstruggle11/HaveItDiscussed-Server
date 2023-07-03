@@ -73,6 +73,105 @@ export const getSingleQuestion = async (questionSlug) => {
 
 /**
  *
+ * @returns {Promise<QuestionModel>}
+ */
+export const getTopAndRecentQuestions = async () => {
+    // Fetch recent three questions
+    const recentQuestions = await QuestionModel.aggregate([
+        {
+            $lookup: {
+                from: 'comments',
+                localField: '_id',
+                foreignField: 'question',
+                as: 'comments'
+            }
+        },
+        {
+            $addFields: {
+                commentCount: { $size: '$comments' }
+            }
+        },
+        {
+            $sort: { createdAt: -1 }
+        },
+        {
+            $limit: 3
+        },
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'postedBy',
+                foreignField: '_id',
+                as: 'postedBy'
+            }
+        },
+        {
+            $unwind: '$postedBy'
+        },
+        {
+            $project: {
+                questionTitle: 1,
+                questionSlug: 1,
+                postedBy: {
+                    name: 1,
+                    profilePic: 1
+                },
+                commentCount: 1,
+                createdAt: 1
+            }
+        }
+    ])
+
+    // Fetch top three questions based on likes and comments
+    const topQuestions = await QuestionModel.aggregate([
+        {
+            $lookup: {
+                from: 'comments',
+                localField: '_id',
+                foreignField: 'question',
+                as: 'comments'
+            }
+        },
+        {
+            $addFields: {
+                commentCount: { $size: '$comments' }
+            }
+        },
+        {
+            $sort: { likeCount: -1, commentCount: -1 }
+        },
+        {
+            $limit: 3
+        },
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'postedBy',
+                foreignField: '_id',
+                as: 'postedBy'
+            }
+        },
+        {
+            $unwind: '$postedBy'
+        },
+        {
+            $project: {
+                questionTitle: 1,
+                questionSlug: 1,
+                likeCount: 1,
+                commentCount: 1,
+                'postedBy.name': 1,
+                'postedBy.profilePic': 1,
+                createdAt: 1
+            }
+        }
+    ])
+
+    return { topQuestions, recentQuestions }
+}
+
+/**
+ *
  * @param {string} slug, id
  * @returns {Promise<QuestionModel>}
  */
