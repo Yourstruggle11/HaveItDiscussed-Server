@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import slugify from 'slugify'
+import { v4 as uuid } from 'uuid'
 
 const questionSchema = new mongoose.Schema(
     {
@@ -36,11 +37,12 @@ const questionSchema = new mongoose.Schema(
 
 questionSchema.pre('validate', function (next) {
     if (this.questionTitle) {
-        this.questionSlug = slugify(this.questionTitle, {
+        const slug = slugify(this.questionTitle, {
             lower: true,
             strict: true,
             replacement: '_'
         })
+        this.questionSlug = `${slug}_${uuid().split('-')[0]}`
     }
     next()
 })
